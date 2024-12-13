@@ -20,12 +20,8 @@ let NftController = class NftController {
         this.nftService = nftService;
     }
     async getNfts(gameType) {
-        common_1.Logger.log('TYPEEEE', gameType);
+        console.log(`Request received for /nfts with gameType: ${gameType}`);
         const parsedGameType = parseInt(gameType, 10) || 1;
-        common_1.Logger.log('TYPEEEE', parsedGameType);
-        if (isNaN(parsedGameType)) {
-            throw new Error('Invalid gameType provided');
-        }
         return this.nftService.getNfts(parsedGameType);
     }
     async getNftById(id) {
