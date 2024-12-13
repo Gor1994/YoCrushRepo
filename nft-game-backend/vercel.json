@@ -18,11 +18,17 @@
         ]
       }
     ],
+    "builds": [
+      {
+        "src": "dist/main.js",
+        "use": "@vercel/node"
+      }
+    ],
     "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/api/main"
-    }
-  ]
+      {
+        "src": "/(.*)",
+        "dest": "dist/main.js"
+      }
+    ]
   }
-  
+    
