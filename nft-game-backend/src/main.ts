@@ -5,21 +5,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Enable CORS
-  const corsOptions = {
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? 'https://yo-crush-repo.vercel.app' // Allow only frontend domain in production
-        : true, // Allow all origins during development
+  app.enableCors({
+    origin: 'https://yo-crush-repo.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Allow cookies/authentication
-  };
-  app.enableCors(corsOptions);
+    credentials: true,
+  });
 
-  // Start the server
+  // Dynamic port binding for Vercel
   const port = process.env.PORT || 3001;
   await app.listen(port);
 
-  console.log(`Backend running at port ${port}`);
+  console.log(`Application is running on: http://localhost:${port}`);
 }
 
 bootstrap();
