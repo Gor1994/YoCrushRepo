@@ -1,0 +1,244 @@
+/* CSS Variables for easy theming */
+:root {
+    --primary-color: #ff6f61; /* Coral */
+    --secondary-color: #3aa1e0; /* Light Blue */
+    --accent-color: #f8cb4a; /* Bright Yellow */
+    --danger-color: #ff4c4c; /* Vibrant Red */
+    --background-color: #f5f5f5; /* Light Gray */
+    --text-color: #2c3e50; /* Deep Blue */
+    --card-bg: rgba(255, 255, 255, 0.9); /* Semi-transparent White */
+    --button-gradient: linear-gradient(135deg, #ff6f61, #3aa1e0); /* Gradient */
+    --modal-bg: rgba(0, 0, 0, 0.5); /* Semi-transparent Black */
+    --box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* Shadow Effect */
+}
+
+/* General Layout */
+.nft-cards-container {
+    font-family: "Poppins", sans-serif;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    animation: fadeIn 1s ease-in-out;
+    position: relative;
+}
+
+/* Wallet Connection */
+.wallet-connection {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card-bg);
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.wallet-display {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: var(--button-gradient);
+    padding: 8px 15px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.wallet-display:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.wallet-icon {
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 2px solid var(--accent-color);
+}
+
+/* Cards Layout */
+.cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 cards in a row */
+    gap: 20px; /* Space between cards */
+    margin-top: 140px; /* Adds space from top (wallet section) */
+    padding: 20px;
+}
+
+/* NFT Card Styles */
+.nft-card {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(12px); /* Glassmorphism effect */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.nft-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.nft-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Rank Buttons */
+.rank-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Ensures proper wrapping if space is tight */
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px;
+}
+
+.rank-buttons button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.rank-buttons button:hover {
+    background: var(--secondary-color);
+    transform: scale(1.1);
+}
+
+/* Submit Rankings Button */
+.submit-ranks-button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
+    background: var(--button-gradient);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.submit-ranks-button:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+/* Leaderboard */
+.leaderboard-container {
+    margin-top: 50px;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.5); /* Glass-like background */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.leaderboard-table th {
+    background: var(--primary-color);
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    border-bottom: 3px solid var(--secondary-color);
+    text-transform: uppercase;
+}
+
+.leaderboard-table td {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+    color: var(--text-color);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-table tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.leaderboard-table tr:hover td {
+    background: rgba(255, 255, 255, 0.4);
+    transition: background 0.3s;
+}
+
+/* Loading Spinner */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
