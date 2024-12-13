@@ -1,27 +1,8 @@
 {
-    "headers": [
-      {
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "https://yo-crush-repo.vercel.app"
-          },
-          {
-            "key": "Access-Control-Allow-Methods",
-            "value": "GET,HEAD,PUT,PATCH,POST,DELETE"
-          },
-          {
-            "key": "Access-Control-Allow-Headers",
-            "value": "Content-Type"
-          }
-        ]
-      }
-    ],
     "routes": [
-        {
-          "src": "/(.*)",
-          "dest": "/dist/main.js"
-        }
-      ]
+      {
+        "src": "/(.*)",
+        "dest": "/dist/main.js"
+      }
+    ]
   }
-  
