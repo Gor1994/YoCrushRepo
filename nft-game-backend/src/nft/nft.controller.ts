@@ -5,14 +5,10 @@ import { NftService } from './nft.service';
 export class NftController {
   constructor(private readonly nftService: NftService) {}
 
-  @Get('nfts')
+  @Get('nfts') // This matches the /nfts route
   async getNfts(@Query('gameType') gameType: string) {
-    Logger.log('TYPEEEE', gameType);
-    const parsedGameType = parseInt(gameType, 10) || 1; // Default to 1 if not provided
-    Logger.log('TYPEEEE', parsedGameType);
-    if (isNaN(parsedGameType)) {
-      throw new Error('Invalid gameType provided');
-    }
+    console.log(`Request received for /nfts with gameType: ${gameType}`);
+    const parsedGameType = parseInt(gameType, 10) || 1;
     return this.nftService.getNfts(parsedGameType);
   }
 

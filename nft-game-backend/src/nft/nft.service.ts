@@ -31,6 +31,7 @@ export class NftService {
   // Fetch a list of NFTs filtered by gameType
   async getNfts(gameType = 1) {
     this.logger.log(`Fetching NFTs for gameType: ${gameType}`);
+    console.log('getNFTs');
     try {
       let totalSupply;
       try {
