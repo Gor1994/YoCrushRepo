@@ -1,5 +1,6 @@
 .card {
-    max-width: 800px;
+    max-width: 600px;
+    height: 750px;
     margin: 20px auto;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -11,12 +12,49 @@
   
   .card-image {
     width: 100%;
-    height: auto;
+    /* /* height: auto; */
     max-height: 600px;
     object-fit: cover;
   }
   
   .card-slider {
     margin-bottom: 10px;
+  }
+  .cards-wrapper.all-ranked {
+    flex-wrap: nowrap;
+    gap: 10px; /* Reduced gap */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    justify-content: flex-start; /* Align cards to the start */
+  }
+
+  .all-ranked .card {
+    max-width: 400px;
+    height: 400px;
+    flex: 0 0 auto; /* Prevent cards from shrinking */
+    margin: 10px;
+    transition: all 0.3s ease; /* Smooth transition for resizing */
+  }
+  
+  .card.small-card {
+    max-width: 150px;
+    max-height: 200px;
+    flex: 0 0 auto;
+    margin: 5px;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .card.small-card img {
+    max-height: 100px; /* Smaller image */
+  }
+  
+  .card p {
+    font-size: 14px; /* Adjust font size for smaller cards */
+    margin: 5px 0;
   }
   

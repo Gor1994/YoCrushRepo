@@ -66,7 +66,7 @@ let NftService = NftService_1 = class NftService {
                 let metadataJson;
                 try {
                     metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
-                    metadataJson = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match}]`);
+                    metadataJson = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match.replace(/`/g, '"')}]`);
                 }
                 catch (err) {
                     this.logger.error(`Error decoding metadata for token ID ${tokenId}`, err.message);

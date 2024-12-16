@@ -84,9 +84,13 @@ export class NftService {
               tokenURI.split('base64,')[1],
               'base64',
             ).toString('utf-8');
+            // metadataJson = metadataJson.replace(
+            //   /"media":"\[(.*?)\]"/,
+            //   (_, match) => `"media":[${match}]`,
+            // );
             metadataJson = metadataJson.replace(
               /"media":"\[(.*?)\]"/,
-              (_, match) => `"media":[${match}]`,
+              (_, match) => `"media":[${match.replace(/`/g, '"')}]`,
             );
             // Parse the decoded metadata
             // const parsedMetadata = JSON.parse(metadataJson);
@@ -137,7 +141,7 @@ export class NftService {
 
         metadataJson = metadataJson.replace(
           /"media":"\[(.*?)\]"/,
-          (_, match) => `"media":[${match}]`,
+          (_, match) => `"media":[${match.replace(/`/g, '"')}]`,
         );
       } catch (err) {
         this.logger.error(
@@ -201,7 +205,7 @@ export class NftService {
 
               const metadataReplaced = metadataJson.replace(
                 /"media":"\[(.*?)\]"/,
-                (_, match) => `"media":[${match}]`,
+                (_, match) => `"media":[${match.replace(/`/g, '"')}]`,
               );
               const metadata = JSON.parse(metadataReplaced);
               this.logger.log(

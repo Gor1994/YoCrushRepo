@@ -38,11 +38,19 @@ const NFTCards = ({ gameType }) => {
       });
       const parsedNFTs = nftResponse.data.nfts.map((nft) => {
         const metadata = JSON.parse(nft.metadata);
-        return {
-          id: nft.id,
-          images: metadata.image ? [metadata.image, ...(metadata.media || [])] : [], // Ensure `images` is always an array
-          metadata,
-        };
+        if(metadata.media.length > 0){
+          return {
+            id: nft.id,
+            images: [metadata.image, ...metadata.media], // Ensure `images` is always an array
+            metadata,
+          };
+        }else{
+          return {
+            id: nft.id,
+            images: [metadata.image], // Ensure `images` is always an array
+            metadata,
+          };
+        }
       });
       console.log("🚀 ~ parsedNFTs ~ parsedNFTs:", parsedNFTs)
       setNfts(parsedNFTs);
@@ -149,12 +157,17 @@ const NFTCards = ({ gameType }) => {
           ) : (
             // Show all NFTs with their assigned ranks
             <>
-              <div className="cards-wrapper">
+              <div
+                className={`cards-wrapper ${
+                  Object.keys(rankings).length === nfts.length ? "all-ranked" : ""
+                }`}
+              >
                 {nfts.map((nft, index) => (
                   <Card
                     key={nft.id}
-                    images={nft.images || []} // Fallback to an empty array
+                    images={nft.images || []}
                     name={nft.metadata.name || `NFT ${index + 1}`}
+                    className={`card ${Object.keys(rankings).length === nfts.length ? "small-card" : ""}`}
                   >
                     <p>Assigned Rank: {rankings[index]}</p>
                   </Card>
