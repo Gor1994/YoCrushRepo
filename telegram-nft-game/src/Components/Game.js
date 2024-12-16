@@ -90,7 +90,6 @@ const NFTCards = ({ gameType }) => {
       const tx = await contract.submit(rankedIds);
       await tx.wait();
 
-      alert("Rankings submitted successfully!");
       // Refresh game data after submission
       setRankings({});
       setAvailableRanks([...Array(nfts.length).keys()].map((i) => i + 1));

@@ -34,7 +34,6 @@ const App = () => {
         setWalletAddress(connectedAddress);
         localStorage.setItem("connectedAccount", connectedAddress);
 
-        alert(`Connected to account: ${connectedAddress}`);
       } catch (err) {
         console.error("MetaMask connection failed:", err);
       }
@@ -42,7 +41,6 @@ const App = () => {
       const dAppUrl = "7ece-37-157-219-187.ngrok-free.app";
       const metamaskDeepLink = `https://metamask.app.link/dapp/${dAppUrl}`;
 
-      alert("Redirecting to MetaMask. Please return to the app after connecting.");
       window.location.href = metamaskDeepLink;
     }
   };
