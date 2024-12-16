@@ -95,7 +95,7 @@
     box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-.nft-card img {
+.nft-card img, .slider img {
     width: 100%;
     height: auto;
     border-radius: 10px;

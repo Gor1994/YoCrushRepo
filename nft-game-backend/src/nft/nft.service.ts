@@ -10,9 +10,9 @@ export class NftService {
   private readonly contract: ethers.Contract;
   private readonly channel: ethers.Contract;
   private readonly contractAddress =
-    '0xC1cCeb5adFE832bb5788Db8F10E8b083C037c89b'; // Replace with your contract address
+    '0x0Dfa72B4A32557a1F3EeFc669b40d09b9E7932aa'; // Replace with your contract address
   private readonly channelContractAddress =
-    '0x8F430c34F2070Ba6660444a43A6997B2540Cc1a9'; // Replace with your contract address
+    '0x45409989d54eb2f2dcDE91687b1e80A6a8c7505d'; // Replace with your contract address
 
   constructor() {
     this.provider = new ethers.JsonRpcProvider('https://rpc2.bahamut.io');
@@ -38,7 +38,6 @@ export class NftService {
         totalSupply = await this.channel.balanceOf(
           '0xbb78EFAaAf9223b4840eA7DefDc379a13b16399B',
         );
-        this.logger.log(' ~ NftService ~ getNfts ~ totalSupply:', totalSupply);
       } catch (err) {
         this.logger.error('Error fetching total supply', err.message);
         throw new HttpException(
@@ -76,7 +75,6 @@ export class NftService {
           randomIds.push(matchingNfts[randomIndex]);
         }
       }
-
       const nfts = await Promise.all(
         randomIds.map(async (tokenId) => {
           const tokenURI = await this.channel.tokenURI(tokenId);
@@ -86,6 +84,20 @@ export class NftService {
               tokenURI.split('base64,')[1],
               'base64',
             ).toString('utf-8');
+            metadataJson = metadataJson.replace(
+              /"media":"\[(.*?)\]"/,
+              (_, match) => `"media":[${match}]`,
+            );
+            // Parse the decoded metadata
+            // const parsedMetadata = JSON.parse(metadataJson);
+
+            // // Ensure the `media` field is an array
+            // if (typeof parsedMetadata.media === 'string') {
+            //   parsedMetadata.media = JSON.parse(parsedMetadata.media); // Convert the serialized string back to an array
+            // }
+
+            // Re-serialize the metadata for consistent output, keeping `media` as an array
+            // metadataJson = JSON.stringify(parsedMetadata);
           } catch (err) {
             this.logger.error(
               `Error decoding metadata for token ID ${tokenId}`,
@@ -96,6 +108,7 @@ export class NftService {
               HttpStatus.BAD_REQUEST,
             );
           }
+
           return { id: tokenId, metadata: metadataJson };
         }),
       );
@@ -121,6 +134,11 @@ export class NftService {
           tokenURI.split('base64,')[1],
           'base64',
         ).toString('utf-8');
+
+        metadataJson = metadataJson.replace(
+          /"media":"\[(.*?)\]"/,
+          (_, match) => `"media":[${match}]`,
+        );
       } catch (err) {
         this.logger.error(
           `Error decoding metadata for token ID ${id}`,
@@ -169,21 +187,29 @@ export class NftService {
           );
           const rank = Number(entry[0]);
           const score = Number(entry[1]);
+          console.log('🚀 ~ NftService ~ rawLeaderboard.map ~ score:', score);
 
           // Fetch additional metadata for the leaderboard entry, if needed
           let name = `Token ${rank}`;
           try {
-            const tokenURI = await this.channel.tokenURI(rank);
-            const metadataJson = Buffer.from(
-              tokenURI.split('base64,')[1],
-              'base64',
-            ).toString('utf-8');
-            const metadata = JSON.parse(metadataJson);
-            this.logger.log(
-              '🚀 ~ NftService ~ rawLeaderboard.map ~ metadata:',
-              metadata,
-            );
-            name = metadata.name || name;
+            if (rank != 0) {
+              const tokenURI = await this.channel.tokenURI(rank);
+              const metadataJson = Buffer.from(
+                tokenURI.split('base64,')[1],
+                'base64',
+              ).toString('utf-8');
+
+              const metadataReplaced = metadataJson.replace(
+                /"media":"\[(.*?)\]"/,
+                (_, match) => `"media":[${match}]`,
+              );
+              const metadata = JSON.parse(metadataReplaced);
+              this.logger.log(
+                '🚀 ~ NftService ~ rawLeaderboard.map ~ metadata:',
+                metadata,
+              );
+              name = metadata.name || name;
+            }
           } catch (error) {
             this.logger.warn(
               `Failed to fetch metadata for token ${rank}`,
@@ -198,12 +224,6 @@ export class NftService {
           };
         }),
       );
-
-      // this.logger.log(
-      //   '~ NftService ~ getLeaderboard ~ leaderboard:',
-      //   leaderboard,
-      // );
-
       return { leaderboard };
     } catch (error) {
       this.logger.error(

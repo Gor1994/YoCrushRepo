@@ -21,8 +21,8 @@ const channelAbi_json_1 = __importDefault(require("../../channelAbi.json"));
 let NftService = NftService_1 = class NftService {
     constructor() {
         this.logger = new common_1.Logger(NftService_1.name);
-        this.contractAddress = '0xC1cCeb5adFE832bb5788Db8F10E8b083C037c89b';
-        this.channelContractAddress = '0x8F430c34F2070Ba6660444a43A6997B2540Cc1a9';
+        this.contractAddress = '0x0Dfa72B4A32557a1F3EeFc669b40d09b9E7932aa';
+        this.channelContractAddress = '0x45409989d54eb2f2dcDE91687b1e80A6a8c7505d';
         this.provider = new ethers_1.ethers.JsonRpcProvider('https://rpc2.bahamut.io');
         this.contract = new ethers_1.ethers.Contract(this.contractAddress, [...abi_json_1.default], this.provider);
         this.channel = new ethers_1.ethers.Contract(this.channelContractAddress, [...channelAbi_json_1.default], this.provider);
@@ -34,7 +34,6 @@ let NftService = NftService_1 = class NftService {
             let totalSupply;
             try {
                 totalSupply = await this.channel.balanceOf('0xbb78EFAaAf9223b4840eA7DefDc379a13b16399B');
-                this.logger.log(' ~ NftService ~ getNfts ~ totalSupply:', totalSupply);
             }
             catch (err) {
                 this.logger.error('Error fetching total supply', err.message);
@@ -67,6 +66,7 @@ let NftService = NftService_1 = class NftService {
                 let metadataJson;
                 try {
                     metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
+                    metadataJson = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match}]`);
                 }
                 catch (err) {
                     this.logger.error(`Error decoding metadata for token ID ${tokenId}`, err.message);
@@ -88,6 +88,7 @@ let NftService = NftService_1 = class NftService {
             let metadataJson;
             try {
                 metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
+                metadataJson = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match}]`);
             }
             catch (err) {
                 this.logger.error(`Error decoding metadata for token ID ${id}`, err.message);
@@ -116,13 +117,17 @@ let NftService = NftService_1 = class NftService {
                 this.logger.log('🚀 ~ NftService ~ rawLeaderboard.map ~ entry:', entry);
                 const rank = Number(entry[0]);
                 const score = Number(entry[1]);
+                console.log('🚀 ~ NftService ~ rawLeaderboard.map ~ score:', score);
                 let name = `Token ${rank}`;
                 try {
-                    const tokenURI = await this.channel.tokenURI(rank);
-                    const metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
-                    const metadata = JSON.parse(metadataJson);
-                    this.logger.log('🚀 ~ NftService ~ rawLeaderboard.map ~ metadata:', metadata);
-                    name = metadata.name || name;
+                    if (rank != 0) {
+                        const tokenURI = await this.channel.tokenURI(rank);
+                        const metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
+                        const metadataReplaced = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match}]`);
+                        const metadata = JSON.parse(metadataReplaced);
+                        this.logger.log('🚀 ~ NftService ~ rawLeaderboard.map ~ metadata:', metadata);
+                        name = metadata.name || name;
+                    }
                 }
                 catch (error) {
                     this.logger.warn(`Failed to fetch metadata for token ${rank}`, error.message);
