@@ -3,8 +3,13 @@ import axios from "axios";
 import { ethers } from "ethers";
 import ABI from "../abi.json";
 import Card from "./Card"; // Import the Card component
-import LoadingSpinner from "./LoadingSpinner"; // Assuming you have a separate spinner component
+// import LoadingSpinner from "./LoadingSpinner"; // Assuming you have a separate spinner component
 
+const LoadingSpinner = () => (
+  <div className="loading-overlay">
+    <div className="spinner"></div>
+  </div>
+);
 const NFTCards = ({ gameType }) => {
   const [nfts, setNfts] = useState([]);
   const [leaderboard, setLeaderboard] = useState([]);
