@@ -18,7 +18,7 @@ const NFTCards = ({ gameType }) => {
   const [rankings, setRankings] = useState({});
   const [availableRanks, setAvailableRanks] = useState([]);
 
-  const backendUrl = "https://yo-crush-repo-qwb5.vercel.app";
+  const backendUrl = "https://yo-crush-repo-ktap.vercel.app/";
   const contractAddress = "0xC1cCeb5adFE832bb5788Db8F10E8b083C037c89b"; // Replace with your contract address
 
   useEffect(() => {
