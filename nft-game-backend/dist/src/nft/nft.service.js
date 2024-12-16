@@ -88,7 +88,7 @@ let NftService = NftService_1 = class NftService {
             let metadataJson;
             try {
                 metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
-                metadataJson = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match}]`);
+                metadataJson = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match.replace(/`/g, '"')}]`);
             }
             catch (err) {
                 this.logger.error(`Error decoding metadata for token ID ${id}`, err.message);
@@ -123,7 +123,7 @@ let NftService = NftService_1 = class NftService {
                     if (rank != 0) {
                         const tokenURI = await this.channel.tokenURI(rank);
                         const metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
-                        const metadataReplaced = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match}]`);
+                        const metadataReplaced = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match.replace(/`/g, '"')}]`);
                         const metadata = JSON.parse(metadataReplaced);
                         this.logger.log('🚀 ~ NftService ~ rawLeaderboard.map ~ metadata:', metadata);
                         name = metadata.name || name;

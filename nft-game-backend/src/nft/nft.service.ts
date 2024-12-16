@@ -84,24 +84,10 @@ export class NftService {
               tokenURI.split('base64,')[1],
               'base64',
             ).toString('utf-8');
-            // metadataJson = metadataJson.replace(
-            //   /"media":"\[(.*?)\]"/,
-            //   (_, match) => `"media":[${match}]`,
-            // );
             metadataJson = metadataJson.replace(
               /"media":"\[(.*?)\]"/,
               (_, match) => `"media":[${match.replace(/`/g, '"')}]`,
             );
-            // Parse the decoded metadata
-            // const parsedMetadata = JSON.parse(metadataJson);
-
-            // // Ensure the `media` field is an array
-            // if (typeof parsedMetadata.media === 'string') {
-            //   parsedMetadata.media = JSON.parse(parsedMetadata.media); // Convert the serialized string back to an array
-            // }
-
-            // Re-serialize the metadata for consistent output, keeping `media` as an array
-            // metadataJson = JSON.stringify(parsedMetadata);
           } catch (err) {
             this.logger.error(
               `Error decoding metadata for token ID ${tokenId}`,
@@ -185,10 +171,6 @@ export class NftService {
 
       const leaderboard = await Promise.all(
         rawLeaderboard.map(async (entry: any, index: number) => {
-          this.logger.log(
-            '🚀 ~ NftService ~ rawLeaderboard.map ~ entry:',
-            entry,
-          );
           const rank = Number(entry[0]);
           const score = Number(entry[1]);
           console.log('🚀 ~ NftService ~ rawLeaderboard.map ~ score:', score);
@@ -208,10 +190,6 @@ export class NftService {
                 (_, match) => `"media":[${match.replace(/`/g, '"')}]`,
               );
               const metadata = JSON.parse(metadataReplaced);
-              this.logger.log(
-                '🚀 ~ NftService ~ rawLeaderboard.map ~ metadata:',
-                metadata,
-              );
               name = metadata.name || name;
             }
           } catch (error) {

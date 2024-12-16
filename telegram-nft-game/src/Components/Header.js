@@ -41,7 +41,7 @@ const Header = ({ walletAddress, onConnect, onDisconnect, onGameTypeChange }) =>
           <div className="wallet-modal-content-to-disconnect">
             <h3>Wallet Address</h3>
             <p>{walletAddress}</p>
-            <button onClick={onDisconnect} className="disconnect-button">
+            <button onClick={() => onDisconnect(() => setIsModalOpen(false))} className="disconnect-button">
               Disconnect
             </button>
             <button

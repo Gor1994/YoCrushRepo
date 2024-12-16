@@ -15,10 +15,14 @@ const App = () => {
     }
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = (closeModalCallback) => {
     setWalletAddress(null);
     localStorage.removeItem("connectedAccount");
     console.log("User disconnected.");
+    
+    if (closeModalCallback) {
+      closeModalCallback(); // Close the modal after disconnecting
+    }
   };
 
   const connectMetaMask = async () => {
@@ -50,7 +54,7 @@ const App = () => {
       <Header
         walletAddress={walletAddress}
         onConnect={connectMetaMask}
-        onDisconnect={handleLogout}
+        onDisconnect={(closeModal) => handleLogout(closeModal)}
         onGameTypeChange={setGameType} // Pass setGameType to Header
       />
       <Game gameType={gameType} /> {/* Pass gameType to Game */}

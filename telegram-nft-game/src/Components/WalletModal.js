@@ -13,10 +13,6 @@ const WalletModal = ({ isOpen, onClose, onConnectMetaMask, onConnectWalletConnec
                         <img src="/images/metamask_logo.png" alt="MetaMask" className="wallet-logo" />
                         MetaMask
                     </button>
-                    <button className="wallet-button" onClick={onConnectWalletConnect}>
-                        <img src="/images/WalletConnect-Logo.png" alt="WalletConnect" className="wallet-logo" />
-                        WalletConnect
-                    </button>
                 </div>
                 <button onClick={onClose} className="modal-close">
                     Cancel
