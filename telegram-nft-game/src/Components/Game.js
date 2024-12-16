@@ -20,7 +20,7 @@ const NFTCards = ({ gameType }) => {
   const [activeIndex, setActiveIndex] = useState(0); // Current active NFT index
   const [leaderboard, setLeaderboard] = useState([]);
 
-  const backendUrl = "https://yo-crush-repo-ktap.vercel.app"; // Replace with your backend URL
+  const backendUrl = "https://yo-crush-repo-ktap.vercel.app/"; // Replace with your backend URL
   // const backendUrl = "http://localhost:3001"; // Replace with your backend URL
   const contractAddress = "0x0Dfa72B4A32557a1F3EeFc669b40d09b9E7932aa";
 
