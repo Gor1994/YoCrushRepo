@@ -2,12 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ethers } from "ethers";
 import ABI from "../abi.json";
-
-const LoadingSpinner = () => (
-  <div className="loading-overlay">
-    <div className="spinner"></div>
-  </div>
-);
+import Card from "./Card"; // Import the Card component
+import LoadingSpinner from "./LoadingSpinner"; // Assuming you have a separate spinner component
 
 const NFTCards = ({ gameType }) => {
   const [nfts, setNfts] = useState([]);
@@ -19,7 +15,7 @@ const NFTCards = ({ gameType }) => {
   const [availableRanks, setAvailableRanks] = useState([]);
 
   const backendUrl = "https://yo-crush-repo-ktap.vercel.app";
-  const contractAddress = "0xC1cCeb5adFE832bb5788Db8F10E8b083C037c89b"; // Replace with your contract address
+  const contractAddress = "0xC1cCeb5adFE832bb5788Db8F10E8b083C037c89b";
 
   useEffect(() => {
     const storedWallet = localStorage.getItem("connectedAccount");
@@ -35,6 +31,7 @@ const NFTCards = ({ gameType }) => {
       });
       const parsedNFTs = nftResponse.data.nfts.map((nft) => ({
         id: nft.id,
+        images: JSON.parse(nft.metadata).images || [], // Assuming metadata contains an array of images
         metadata: JSON.parse(nft.metadata),
       }));
       setNfts(parsedNFTs);
@@ -55,6 +52,7 @@ const NFTCards = ({ gameType }) => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchGameData();
   }, [gameType]);
@@ -90,10 +88,9 @@ const NFTCards = ({ gameType }) => {
       const tx = await contract.submit(rankedIds);
       await tx.wait();
 
-      // Refresh game data after submission
       setRankings({});
       setAvailableRanks([...Array(nfts.length).keys()].map((i) => i + 1));
-      await fetchGameData()
+      await fetchGameData();
     } catch (err) {
       console.error("Error submitting rankings:", err.message);
       setError("Failed to submit rankings. Please try again.");
@@ -109,16 +106,16 @@ const NFTCards = ({ gameType }) => {
         <>
           <div className="cards-wrapper">
             {nfts.map((nft, index) => (
-              <div
-                className={`nft-card ${rankings[index] ? "inactive-card" : ""}`}
+              <Card
                 key={nft.id}
+                images={nft.images}
+                name={nft.metadata.name || `NFT ${index + 1}`}
                 style={{
                   opacity: rankings[index] ? 0.5 : 1,
                   pointerEvents: rankings[index] ? "none" : "auto",
                 }}
+                className={rankings[index] ? "inactive-card" : ""}
               >
-                <h3>{nft.metadata.name || `NFT ${index + 1}`}</h3>
-                <img src={nft.metadata.image} alt={nft.metadata.name || "NFT"} />
                 <div className="rank-buttons">
                   {!rankings[index] &&
                     availableRanks.map((rank) => (
@@ -135,7 +132,7 @@ const NFTCards = ({ gameType }) => {
                     ))}
                 </div>
                 {rankings[index] && <p>Assigned Rank: {rankings[index]}</p>}
-              </div>
+              </Card>
             ))}
           </div>
 
