@@ -98,30 +98,44 @@ useEffect(() => {
     sortNFTsByRank();
   }
 }, [rankings]);
+const handleCardClick = (index) => {
+  if (isSwapped) return; // Prevent further swaps
 
-  const handleCardClick = (index) => {
-    if (isSwapped) return;
+  if (selectedCardIndex === null) {
+    // Select the first card
+    setSelectedCardIndex(index);
+  } else {
+    // Swap NFTs and their ranks
+    setNfts((prevNfts) => {
+      const updatedNfts = [...prevNfts];
+      
+      // Swap the two NFTs in the array
+      const tempNFT = updatedNfts[selectedCardIndex];
+      updatedNfts[selectedCardIndex] = updatedNfts[index];
+      updatedNfts[index] = tempNFT;
 
-    if (selectedCardIndex === null) {
-      setSelectedCardIndex(index);
-    } else {
-      setNfts((prevNfts) => {
-        const updatedNfts = [...prevNfts];
-        [updatedNfts[selectedCardIndex], updatedNfts[index]] = [updatedNfts[index], updatedNfts[selectedCardIndex]];
+      return updatedNfts;
+    });
 
-        const newRankings = { ...rankings };
-        [newRankings[selectedCardIndex], newRankings[index]] = [
-          newRankings[index],
-          newRankings[selectedCardIndex],
-        ];
-        setRankings(newRankings);
+    // Swap ranks between the two NFTs using their IDs
+    setRankings((prevRankings) => {
+      const updatedRankings = { ...prevRankings };
+      const idA = nfts[selectedCardIndex].id;
+      const idB = nfts[index].id;
 
-        return updatedNfts;
-      });
-      setSelectedCardIndex(null);
-      setIsSwapped(true);
-    }
-  };
+      // Swap ranks in the rankings state
+      const tempRank = updatedRankings[idA];
+      updatedRankings[idA] = updatedRankings[idB];
+      updatedRankings[idB] = tempRank;
+
+      return updatedRankings;
+    });
+
+    setSelectedCardIndex(null); // Reset selection
+    setIsSwapped(true); // Prevent further swaps
+  }
+};
+
   const handleSubmitRanks = async () => {
     if (!walletAddress) {
       setError("Please connect your wallet first.");
