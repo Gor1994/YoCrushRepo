@@ -24,6 +24,7 @@
     box-shadow: var(--box-shadow);
     animation: fadeIn 1s ease-in-out;
     position: relative;
+    overflow-x: hidden;
 }
 
 /* Wallet Connection */
@@ -74,7 +75,7 @@
     grid-template-columns: repeat(5, 1fr); /* 5 cards in a row */
     gap: 20px; /* Space between cards */
     margin-top: 140px; /* Adds space from top (wallet section) */
-    padding: 20px;
+    /* padding: 20px; */
 }
 
 /* NFT Card Styles */
@@ -220,7 +221,7 @@
     border-top: 6px solid var(--accent-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
-}
+}  
 
 /* Animations */
 @keyframes fadeIn {

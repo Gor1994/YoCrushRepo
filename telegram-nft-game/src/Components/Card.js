@@ -1,15 +1,14 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Correct modular imports
-import "swiper/css"; // Main Swiper styles
-import "swiper/css/navigation"; // Navigation module styles
-import "swiper/css/pagination"; // Pagination module styles
-import "../styles/card.css"
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css"; 
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "../styles/card.css";
 
-
-const Card = ({ images, name, children }) => {
+const Card = ({ images, name, children, isSingle = false }) => {
   return (
-    <div className="card">
+    <div className={isSingle ? "card single-card" : "card"}>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation

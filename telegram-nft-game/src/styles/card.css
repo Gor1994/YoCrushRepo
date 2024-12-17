@@ -1,60 +1,177 @@
+/* General Card Styles */
 .card {
-    max-width: 600px;
-    height: 750px;
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    background-color: #fff;
-  }
-  
-  .card-image {
-    width: 100%;
-    /* /* height: auto; */
-    max-height: 600px;
-    object-fit: cover;
-  }
-  
-  .card-slider {
-    margin-bottom: 10px;
-  }
+  width: 100%;
+  max-width: 250px; /* Default small card size */
+  height: 290px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #fff;
+  text-align: center;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+  transition: all 0.3s ease;
+}
+
+/* Single Card View (Large Card) */
+.single-card {
+  max-width: 600px; /* Larger width for single card */
+  height: 750px;
+  margin: 20px auto; /* Center the card on screen */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.single-card img {
+  height: 600px; /* Larger image height for single card */
+  object-fit: cover;
+}
+
+/* Cards Wrapper: Display 5 Cards in a Single Line */
+.cards-wrapper.all-ranked {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Exactly 5 equal columns */
+  gap: 10px; /* Space between cards */
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Small Card Adjustments for Group View */
+.cards-wrapper.all-ranked .card {
+  max-width: 200px;
+  height: 250px;
+  margin: 0;
+}
+
+.cards-wrapper.all-ranked .card img {
+  height: 150px; /* Adjusted image height */
+  object-fit: cover;
+}
+
+/* Selected Card: Highlighted Card */
+.card.selected-card {
+  border: 3px solid #4caf50; /* Green border for selected card */
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  transform: scale(1.05); /* Slight zoom effect */
+  cursor: pointer;
+}
+
+/* Inactive Card: Dimmed */
+.card.inactive-card {
+  opacity: 0.5; /* Dim the card */
+  pointer-events: none; /* Disable clicks */
+  cursor: not-allowed;
+}
+
+/* Active Card: Normal State */
+.card.active-card {
+  border: 1px solid #3aa1e0; /* Blue border for active cards */
+  box-shadow: 0 4px 6px rgba(58, 161, 224, 0.3);
+  cursor: pointer;
+}
+
+/* Rank Buttons */
+.rank-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.rank-buttons button {
+  background: #ff6f61; /* Coral color */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.rank-buttons button:hover {
+  background: #3aa1e0; /* Light blue on hover */
+  transform: scale(1.1);
+}
+
+/* Submit Rankings Button */
+.submit-ranks-button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 18px;
+  background: linear-gradient(135deg, #ff6f61, #3aa1e0);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-ranks-button:hover {
+  background-color: #f8cb4a;
+  transform: scale(1.05);
+}
+
+/* Responsive Adjustments */
+
+/* Medium Screens (Tablet) */
+@media (max-width: 1024px) {
   .cards-wrapper.all-ranked {
-    flex-wrap: nowrap;
-    gap: 10px; /* Reduced gap */
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
-    justify-content: flex-start; /* Align cards to the start */
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
   }
 
-  .all-ranked .card {
-    max-width: 400px;
-    height: 400px;
-    flex: 0 0 auto; /* Prevent cards from shrinking */
-    margin: 10px;
-    transition: all 0.3s ease; /* Smooth transition for resizing */
+  .card {
+    max-width: 220px;
+    height: 260px;
   }
-  
-  .card.small-card {
-    max-width: 150px;
-    max-height: 200px;
-    flex: 0 0 auto;
-    margin: 5px;
-  }
-  
+
   .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+    height: 160px;
   }
-  
-  .card.small-card img {
-    max-height: 100px; /* Smaller image */
+}
+
+/* Small Screens (Mobile) */
+@media (max-width: 768px) {
+  .cards-wrapper.all-ranked {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
   }
-  
-  .card p {
-    font-size: 14px; /* Adjust font size for smaller cards */
-    margin: 5px 0;
+
+  .card {
+    max-width: 200px;
+    height: 240px;
   }
-  
+
+  .card img {
+    height: 140px;
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  .cards-wrapper.all-ranked {
+    grid-template-columns: 1fr; /* 1 card per row */
+  }
+
+  .card {
+    max-width: 100%;
+    height: 220px;
+  }
+
+  .card img {
+    height: 130px;
+  }
+}
