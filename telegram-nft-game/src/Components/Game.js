@@ -135,58 +135,58 @@ const handleCardClick = (index) => {
     setIsSwapped(true); // Prevent further swaps
   }
 };
+const handleSubmitRanks = async () => {
+  if (!walletAddress) {
+    setError("Please connect your wallet first.");
+    return;
+  }
 
-  const handleSubmitRanks = async () => {
-    if (!walletAddress) {
-      setError("Please connect your wallet first.");
-      return;
+  if (Object.keys(rankings).length !== nfts.length) {
+    setError("Please assign ranks to all NFTs.");
+    return;
+  }
+
+  // Extract NFT IDs sorted by their assigned ranks
+  const rankedIds = Object.keys(rankings)
+    .sort((a, b) => rankings[a] - rankings[b]) // Sort IDs by rank
+    .map((id) => id); // Map to sorted NFT IDs
+
+  console.log("🚀 Ranked IDs to Submit:", rankedIds);
+
+  try {
+    setLoading(true);
+    setError("");
+
+    if (!window.ethereum) {
+      throw new Error("Ethereum provider not found. Install MetaMask.");
     }
-  
-    if (Object.keys(rankings).length !== nfts.length) {
-      setError("Please assign ranks to all NFTs.");
-      return;
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    console.log("🚀 Wallet Address:", await signer.getAddress());
+
+    const contract = new ethers.Contract(contractAddress, ABI, signer);
+
+    // Check if the method exists
+    if (!contract.submit) {
+      throw new Error("Contract method 'submit' not found. Check ABI.");
     }
-  
-    const rankedIds = Object.entries(rankings)
-      .sort(([, rankA], [, rankB]) => rankA - rankB)
-      .map(([index]) => nfts[Number(index)].id);
-  
-    console.log("🚀 Ranked IDs to Submit:", rankedIds); // Debug output
-  
-    try {
-      setLoading(true);
-      setError("");
-  
-      if (!window.ethereum) {
-        throw new Error("Ethereum provider not found. Install MetaMask.");
-      }
-  
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      console.log("🚀 Wallet Address:", await signer.getAddress()); // Debug wallet address
-  
-      const contract = new ethers.Contract(contractAddress, ABI, signer);
-  
-      // Check contract existence and method
-      if (!contract.submit) {
-        throw new Error("Contract method 'submit' not found. Check ABI.");
-      }
-  
-      console.log("🚀 Sending transaction...");
-      const tx = await contract.submit(rankedIds); // Trigger transaction
-      console.log("🚀 Transaction Hash:", tx.hash);
-  
-      const receipt = await tx.wait(); // Wait for confirmation
-      console.log("✅ Transaction Receipt:", receipt);
-  
-      fetchGameData(); // Refresh data
-    } catch (err) {
-      console.error("❌ Error submitting rankings:", err.message || err);
-      setError(err.message || "Failed to submit rankings. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+
+    console.log("🚀 Sending transaction...");
+    const tx = await contract.submit(rankedIds); // Submit ranked NFT IDs
+    console.log("🚀 Transaction Hash:", tx.hash);
+
+    const receipt = await tx.wait(); // Wait for confirmation
+    console.log("✅ Transaction Receipt:", receipt);
+
+    fetchGameData(); // Refresh data after submission
+  } catch (err) {
+    console.error("❌ Error submitting rankings:", err.message || err);
+    setError(err.message || "Failed to submit rankings. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
   
 
   return (
