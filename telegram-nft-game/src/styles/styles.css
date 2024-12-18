@@ -16,7 +16,7 @@
 .nft-cards-container {
     font-family: "Poppins", sans-serif;
     padding: 20px;
-    max-width: 1400px;
+    max-width: 100%;
     margin: 0 auto;
     background-color: var(--background-color);
     color: var(--text-color);
@@ -75,6 +75,14 @@
     grid-template-columns: repeat(5, 1fr); /* 5 cards in a row */
     gap: 20px; /* Space between cards */
     margin-top: 140px; /* Adds space from top (wallet section) */
+    /* padding: 20px; */
+}
+/* Cards Layout */
+.sorted-by-points {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 cards in a row */
+    gap: 20px; /* Space between cards */
+    /* margin-top: 40px; Adds space from top (wallet section) */
     /* padding: 20px; */
 }
 
@@ -150,70 +158,6 @@
     transform: scale(1.05);
 }
 
-/* Leaderboard */
-.leaderboard-container {
-    margin-top: 50px;
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: var(--box-shadow);
-    backdrop-filter: blur(10px); /* Glassmorphism effect */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.leaderboard-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    text-align: center;
-    font-size: 16px;
-    color: var(--text-color);
-    background: rgba(255, 255, 255, 0.5); /* Glass-like background */
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-}
-
-.leaderboard-table th {
-    background: var(--primary-color);
-    color: white;
-    font-size: 18px;
-    padding: 12px;
-    border-bottom: 3px solid var(--secondary-color);
-    text-transform: uppercase;
-}
-
-.leaderboard-table td {
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.3);
-    font-weight: bold;
-    color: var(--text-color);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.leaderboard-table tr:nth-child(even) td {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.leaderboard-table tr:hover td {
-    background: rgba(255, 255, 255, 0.4);
-    transition: background 0.3s;
-}
-
-/* Loading Spinner */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
 .spinner {
     width: 60px;
     height: 60px;
@@ -223,17 +167,43 @@
     animation: spin 1s linear infinite;
 }  
 
-/* Animations */
-@keyframes fadeIn {
+/* Badge for leaderboard position */
+.badge {
+    display: inline-block;
+    position: absolute;
+    padding: 5px 10px;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff; /* Default blue color */
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  
+  /* Leaderboard-specific badge */
+  .leaderboard-badge {
+    background-color: #28a745; /* Green for leaderboard badge */
+    border: 1px solid rgba(0, 255, 0, 0.3); /* Subtle border for contrast */
+    box-shadow: 0 2px 6px rgba(0, 128, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  /* Fade-in animation for badge */
+  @keyframes fadeIn {
     from {
-        opacity: 0;
-        transform: translateY(-20px);
+      opacity: 0;
+      transform: scale(0.9);
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+      opacity: 1;
+      transform: scale(1);
     }
-}
+  }
+  
 
 @keyframes spin {
     0% {
@@ -243,3 +213,62 @@
         transform: rotate(360deg);
     }
 }
+
+/* Hint Container */
+.hint-container {
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly opaque background */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+    border-radius: 8px; /* Rounded edges */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  /* Hint Text */
+  .hint-text {
+    font-size: 14px;
+    color: var(--text-color, #333); /* Fallback color if --text-color is not defined */
+    line-height: 1.5;
+  }
+  
+  .hint-text strong {
+    color: var(--primary-color, #007bff); /* Highlight important text */
+    font-weight: bold;
+  }
+  
+  .hint-text em {
+    color: var(--secondary-color, #28a745); /* Emphasized text in green */
+    font-style: italic;
+  }
+  
+/* Header Styling */
+.community-header {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary-color, #007bff); /* Default to blue if primary color is not defined */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9); /* Slightly opaque background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .switch-hint {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9); /* Slightly opaque background */
+    color: var(--text-color, #333); /* Default to dark text */
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Subtle text shadow */
+  }
+  

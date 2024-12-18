@@ -84,9 +84,12 @@ const AddCard = ({ onWalletConnect }) => {
   };
   
 
-  // Upload Media Files to Pinata
   const uploadMediaFiles = async () => {
-    if (mediaFiles.length === 0) return;
+    if (!mediaFiles || mediaFiles.length === 0) {
+      console.log("No media files selected to upload.");
+      return; // Prevent uploading when no files are selected
+    }
+  
     setLoading(true);
   
     try {
@@ -109,14 +112,14 @@ const AddCard = ({ onWalletConnect }) => {
           );
   
           const cid = uploadResponse.data.IpfsHash;
-          console.log("File uploaded successfully. CID:", cid);
+          console.log("Media File uploaded successfully. CID:", cid);
   
-          // Step 2: Explicitly pin the uploaded file using pinByHash
-          const pinResponse = await axios.post(
+          // Step 2: Explicitly pin the uploaded file
+          await axios.post(
             "https://api.pinata.cloud/pinning/pinByHash",
             {
-              hashToPin: cid, // CID to pin
-              pinataMetadata: { name: `media_file_${cid}` }, // Optional: Set a custom name
+              hashToPin: cid,
+              pinataMetadata: { name: `media_file_${cid}` },
             },
             {
               headers: {
@@ -125,14 +128,14 @@ const AddCard = ({ onWalletConnect }) => {
               },
             }
           );
+          setMediaFiles([]); // Reset mediaFiles state
   
-          console.log("File pinned successfully:", pinResponse.data);
-  
-          // Return the CID with the ipfs:// prefix
+          // Return the CID with "ipfs://" prefix
           return `ipfs://${cid}`;
         })
       );
   
+      // Only update media state if new files were uploaded
       setFormData((prev) => ({ ...prev, media: uploadedCIDs }));
       console.log("Media Files CIDs (Pinned):", uploadedCIDs);
     } catch (err) {
@@ -143,6 +146,24 @@ const AddCard = ({ onWalletConnect }) => {
     }
   };
   
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      description: "",
+      firstName: "",
+      lastName: "",
+      height: "",
+      bornAt: "",
+      gameType: "",
+      image: "",
+      media: [],
+    });
+    setMainFile(null);
+    setMediaFiles([]);
+    setError("");
+    console.log("Form reset successfully!");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -157,6 +178,7 @@ const AddCard = ({ onWalletConnect }) => {
     try {
       // 2. Transform formData into KeyValuePair[] format
       const { name, description, firstName, lastName, height, bornAt, gameType, image, media } = formData;
+      console.log("🚀 ~ handleSubmit ~ media:", media)
     //   const prefixedImage = image ? `ipfs://${image}` : ""; // Add prefix to the main image CID
     //   const prefixedMedia = media.map((cid) => `ipfs://${cid}`); 
       const userMetadata = [
@@ -218,8 +240,10 @@ const AddCard = ({ onWalletConnect }) => {
       // Wait for transaction confirmation
       await tx.wait();
       console.log("✅ Transaction confirmed!");
-  
+      resetForm()
       alert("Game card created successfully!");
+      window.location.reload()
+
     } catch (err) {
       console.error("❌ Error calling createGameCard:", err.message || err);
       alert(`Failed to create game card: ${err.message}`);
