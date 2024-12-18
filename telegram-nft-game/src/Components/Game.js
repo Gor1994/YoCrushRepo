@@ -226,11 +226,11 @@ const NFTCards = ({ gameType }) => {
           <>
             <div className="hint-container">
               <p className="hint-text">
-                <strong>Ready to rank some famous faces? Here’s how it works:</strong> <br />
-                You’ll see <strong>5 people, one at a time.</strong> <br />
+                <strong>Ready to rank some famous faces? Here’s how it works:</strong>
+                You’ll see <strong>5 people, one at a time.</strong>
                 For each person, choose a rank from <strong>1 to 5</strong> (1 is the top spot!). <br />
-                Once you pick a rank, it’s locked, and the next person will appear. <br />
-                Keep going until all <strong>5 ranks</strong> are filled. <br />
+                Once you pick a rank, it’s locked, and the next person will appear.
+                Keep going until all <strong>5 ranks</strong> are filled.
                 Let’s see how your choices play out! <strong>Enjoy the challenge!</strong>
               </p>
             </div>
@@ -254,18 +254,14 @@ const NFTCards = ({ gameType }) => {
             {!isSwapped &&
               <div className="hint-container">
                 <p className="hint-text">
-                  Great job! <strong>Your first ranking is complete.</strong> <br />
-                  <br />
+                  Great job! <strong>Your first ranking is complete.</strong>
                   Now, it’s time for one final adjustment:
-                  <br />
                   <strong>
                     You must switch the positions of exactly two people by clicking on their pictures.
                   </strong>
                   <br />
-                  <br />
-                  This switch is mandatory and can only be done once. <br />
+                  This switch is mandatory and can only be done once.
                   After the switch, your ranking will be locked, and no further changes can be made.
-                  <br />
                   <strong>Make your move wisely—this is your final chance!</strong>
                 </p>
               </div>}
