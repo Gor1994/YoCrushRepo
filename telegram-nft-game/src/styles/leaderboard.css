@@ -1,0 +1,102 @@
+/* Leaderboard Modal Styles */
+.leaderboard-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure modal appears above all other content */
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    backdrop-filter: blur(15px); /* Glassmorphism effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out; /* Smooth entry animation */
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+.close-button:hover {
+    background: var(--secondary-color);
+}
+
+/* Table Inside Modal */
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.7); /* Glass-like background */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.leaderboard-table th {
+    background: var(--primary-color);
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    text-transform: uppercase;
+}
+
+.leaderboard-table td {
+    padding: 12px;
+    font-weight: bold;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-table tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.leaderboard-table tr:hover td {
+    background: rgba(255, 255, 255, 0.5);
+    transition: background 0.3s;
+}
+
+/* Modal Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
