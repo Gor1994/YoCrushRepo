@@ -16,7 +16,7 @@
 .card img {
   width: 100%;
   height: 180px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 10px 10px 0 0;
   transition: all 0.3s ease;
 }
@@ -32,7 +32,7 @@
 
 .single-card img {
   height: 600px; /* Larger image height for single card */
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* Cards Wrapper: Display 5 Cards in a Single Line */
