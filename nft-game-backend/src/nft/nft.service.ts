@@ -10,9 +10,9 @@ export class NftService {
   private readonly contract: ethers.Contract;
   private readonly channel: ethers.Contract;
   private readonly contractAddress =
-    '0x45551f63a167e4317cBC9160E763B031771EB77b'; // Replace with your contract address
+    '0x1D3A65b3a41b007451364F7baD8C956C4A29d6Fc'; // Replace with your contract address
   private readonly channelContractAddress =
-    '0x0Fc53F848320A5993277690362Ba8062A109CB94'; // Replace with your contract address
+    '0x05959350E23068d4a871cA85CE768C3129088294'; // Replace with your contract address
 
   constructor() {
     this.provider = new ethers.JsonRpcProvider('https://rpc2.bahamut.io');

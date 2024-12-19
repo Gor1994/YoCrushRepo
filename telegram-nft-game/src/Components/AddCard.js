@@ -202,7 +202,7 @@ const AddCard = ({ onWalletConnect }) => {
       const signer = await provider.getSigner();
   
       // 4. Initialize the smart contract
-      const contractAddress = "0x0Fc53F848320A5993277690362Ba8062A109CB94"; // Replace with your contract address
+      const contractAddress = "0x05959350E23068d4a871cA85CE768C3129088294"; // Replace with your contract address
       const contractABI = [
         {
           inputs: [
