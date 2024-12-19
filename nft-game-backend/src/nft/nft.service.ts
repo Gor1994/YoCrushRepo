@@ -36,7 +36,7 @@ export class NftService {
       let totalSupply;
       try {
         totalSupply = await this.channel.balanceOf(
-          '0xbb78EFAaAf9223b4840eA7DefDc379a13b16399B',
+          '0x8A9ae4a14cd88dE652afA2786D20349d96849925',
         );
       } catch (err) {
         this.logger.error('Error fetching total supply', err.message);
