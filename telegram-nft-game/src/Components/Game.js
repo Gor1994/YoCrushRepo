@@ -302,10 +302,11 @@ const NFTCards = ({ gameType }) => {
             
             {sortNFTsByPoints().map((nft, index) => {
                     const leaderboardPosition = getLeaderboardPosition(nft.id);
-                    console.log("🚀 ~ {sortNFTsByPoints ~ leaderboardPosition:", leaderboardPosition)
+                    console.log("🚀 ~ {sortNFTsByPoints ~ leaderboardPosition:", nft)
                     return (
                       <Card
                         key={nft.id}
+                        id = {nft.id}
                         images={nft.images || []}
                         name={nft.metadata.name || `NFT ${index + 1}`}
                         isSingle={false}

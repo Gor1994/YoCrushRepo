@@ -51,7 +51,7 @@ export class NftService {
       }
 
       const matchingNfts = [];
-      for (let tokenId = 0; tokenId < totalSupply; tokenId++) {
+      for (let tokenId = 1; tokenId <= totalSupply; tokenId++) {
         const stats = await this.contract.cardStats(tokenId);
         if (stats.gameType == gameType) {
           matchingNfts.push(tokenId);
