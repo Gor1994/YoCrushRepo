@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "../styles/card.css";
 
 const Card = ({ images, name, children, isSingle = false }) => {
-  
+  console.log(images)
   return (
     <div className={isSingle ? "card single-card" : "card"}>
       <Swiper
@@ -20,7 +20,7 @@ const Card = ({ images, name, children, isSingle = false }) => {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
-            <img src={images[0].replace("ipfs://", "https://ipfs.bahamut.io/ipfs/")} alt={name} className="card-image" />
+            <img src={image.replace("ipfs://", "https://ipfs.bahamut.io/ipfs/")} alt={name} className="card-image" />
           </SwiperSlide>
         ))}
       </Swiper>
