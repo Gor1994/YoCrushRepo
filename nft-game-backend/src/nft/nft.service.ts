@@ -10,9 +10,9 @@ export class NftService {
   private readonly contract: ethers.Contract;
   private readonly channel: ethers.Contract;
   private readonly contractAddress =
-    '0x9870BaCc2674dDBB68008a74cBaA28dA20Db8372'; // Replace with your contract address
+    '0x2033380116c7Fb06DCEDA9c82413bb36d46E9977'; // Replace with your contract address
   private readonly channelContractAddress =
-    '0x9E6c67D2935e7eAB297C0c34395dA566E2F9d64e'; // Replace with your contract address
+    '0xE70aB54F72dFf387ED22375f05275F6E22d480B9'; // Replace with your contract address
 
   constructor() {
     this.provider = new ethers.JsonRpcProvider('https://rpc2.bahamut.io');
@@ -36,7 +36,7 @@ export class NftService {
       let totalSupply;
       try {
         totalSupply = await this.channel.balanceOf(
-          '0xbb78EFAaAf9223b4840eA7DefDc379a13b16399B',
+          '0x8A9ae4a14cd88dE652afA2786D20349d96849925',
         );
       } catch (err) {
         this.logger.error('Error fetching total supply', err.message);
