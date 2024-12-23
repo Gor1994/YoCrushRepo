@@ -21,8 +21,8 @@ const channelAbi_json_1 = __importDefault(require("../../channelAbi.json"));
 let NftService = NftService_1 = class NftService {
     constructor() {
         this.logger = new common_1.Logger(NftService_1.name);
-        this.contractAddress = '0x0Dfa72B4A32557a1F3EeFc669b40d09b9E7932aa';
-        this.channelContractAddress = '0x45409989d54eb2f2dcDE91687b1e80A6a8c7505d';
+        this.contractAddress = '0xB1C7eFC5da68eF7361b59E69Ac9F1A8048d53FD2';
+        this.channelContractAddress = '0xD2a6aE0E7959Acd35A74c115fE8C035a84245044';
         this.provider = new ethers_1.ethers.JsonRpcProvider('https://rpc2.bahamut.io');
         this.contract = new ethers_1.ethers.Contract(this.contractAddress, [...abi_json_1.default], this.provider);
         this.channel = new ethers_1.ethers.Contract(this.channelContractAddress, [...channelAbi_json_1.default], this.provider);
@@ -33,7 +33,7 @@ let NftService = NftService_1 = class NftService {
         try {
             let totalSupply;
             try {
-                totalSupply = await this.channel.balanceOf('0xbb78EFAaAf9223b4840eA7DefDc379a13b16399B');
+                totalSupply = await this.channel.balanceOf('0x8A9ae4a14cd88dE652afA2786D20349d96849925');
             }
             catch (err) {
                 this.logger.error('Error fetching total supply', err.message);
@@ -43,7 +43,7 @@ let NftService = NftService_1 = class NftService {
                 throw new common_1.HttpException('No NFTs available', common_1.HttpStatus.BAD_REQUEST);
             }
             const matchingNfts = [];
-            for (let tokenId = 0; tokenId < totalSupply; tokenId++) {
+            for (let tokenId = 1; tokenId <= totalSupply; tokenId++) {
                 const stats = await this.contract.cardStats(tokenId);
                 if (stats.gameType == gameType) {
                     matchingNfts.push(tokenId);
@@ -114,7 +114,6 @@ let NftService = NftService_1 = class NftService {
             this.logger.log(`Raw leaderboard data for gameType ${gameType}:`, rawLeaderboard);
             this.logger.log('NftService ~ getLeaderboard ~ rawLeaderboard:', rawLeaderboard);
             const leaderboard = await Promise.all(rawLeaderboard.map(async (entry, index) => {
-                this.logger.log('🚀 ~ NftService ~ rawLeaderboard.map ~ entry:', entry);
                 const rank = Number(entry[0]);
                 const score = Number(entry[1]);
                 console.log('🚀 ~ NftService ~ rawLeaderboard.map ~ score:', score);
@@ -125,7 +124,6 @@ let NftService = NftService_1 = class NftService {
                         const metadataJson = Buffer.from(tokenURI.split('base64,')[1], 'base64').toString('utf-8');
                         const metadataReplaced = metadataJson.replace(/"media":"\[(.*?)\]"/, (_, match) => `"media":[${match.replace(/`/g, '"')}]`);
                         const metadata = JSON.parse(metadataReplaced);
-                        this.logger.log('🚀 ~ NftService ~ rawLeaderboard.map ~ metadata:', metadata);
                         name = metadata.name || name;
                     }
                 }
