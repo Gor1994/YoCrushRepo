@@ -24,8 +24,8 @@ const NFTCards = ({ gameType }) => {
   const [isSwapped, setIsSwapped] = useState(false);
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const backendUrl = "https://yo-crush-repo-ktap.vercel.app";
-  const contractAddress = "0xB1C7eFC5da68eF7361b59E69Ac9F1A8048d53FD2";
+  const backendUrl = "https://yo-crush-repo-nnk5.vercel.app";
+  const contractAddress = "0x9870BaCc2674dDBB68008a74cBaA28dA20Db8372";
 
   useEffect(() => {
     const storedWallet = localStorage.getItem("connectedAccount");
