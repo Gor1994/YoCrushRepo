@@ -25,7 +25,7 @@ const NFTCards = ({ gameType }) => {
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const backendUrl = "https://yo-crush-repo-ktap.vercel.app";
-  const contractAddress = "0x1D3A65b3a41b007451364F7baD8C956C4A29d6Fc";
+  const contractAddress = "0xB1C7eFC5da68eF7361b59E69Ac9F1A8048d53FD2";
 
   useEffect(() => {
     const storedWallet = localStorage.getItem("connectedAccount");

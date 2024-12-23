@@ -8,7 +8,7 @@ const Header = ({ walletAddress, onConnect, onDisconnect, onGameTypeChange }) =>
     walletAddress?.slice(0, 6) + "..." + walletAddress?.slice(-4);
   return (
     <header className="header">
-      <div className="logo">YoCrush</div>
+      <div className="logo">ICrush</div>
 
       <nav className="menu">
         <button onClick={() => onGameTypeChange(1)} className="menu-item">

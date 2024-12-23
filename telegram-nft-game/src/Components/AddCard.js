@@ -167,7 +167,17 @@ const AddCard = ({ onWalletConnect }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // 1. Debugging Form Data
+    // Validation: Check if main image or media files are empty
+    if (!formData.image) {
+      alert("Please upload the main image before submitting.");
+      return;
+    }
+  
+    if (!formData.media || formData.media.length === 0) {
+      alert("Please upload at least one media file before submitting.");
+      return;
+    }
+  
     console.log("Form Data Submitted:", formData);
   
     if (!walletAddress) {
@@ -176,11 +186,9 @@ const AddCard = ({ onWalletConnect }) => {
     }
   
     try {
-      // 2. Transform formData into KeyValuePair[] format
+      // Transform formData into KeyValuePair[] format
       const { name, description, firstName, lastName, height, bornAt, gameType, image, media } = formData;
-      console.log("🚀 ~ handleSubmit ~ media:", media)
-    //   const prefixedImage = image ? `ipfs://${image}` : ""; // Add prefix to the main image CID
-    //   const prefixedMedia = media.map((cid) => `ipfs://${cid}`); 
+  
       const userMetadata = [
         { key: "name", value: name },
         { key: "description", value: description },
@@ -190,19 +198,19 @@ const AddCard = ({ onWalletConnect }) => {
         { key: "bornAt", value: bornAt },
         { key: "gameType", value: gameType },
         { key: "image", value: image },
-        { key: "media", value: media.join(",") }, // Convert media array into a comma-separated string
-      ].filter((item) => item.value); // Filter out empty fields
+        { key: "media", value: media.join(",") },
+      ].filter((item) => item.value);
   
       console.log("Transformed KeyValuePair[]:", userMetadata);
   
-      // 3. Connect to MetaMask and get signer
+      // Connect to MetaMask and get signer
       if (!window.ethereum) throw new Error("MetaMask is not installed.");
   
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
   
-      // 4. Initialize the smart contract
-      const contractAddress = "0x05959350E23068d4a871cA85CE768C3129088294"; // Replace with your contract address
+      // Initialize the smart contract
+      const contractAddress = "0xD2a6aE0E7959Acd35A74c115fE8C035a84245044"; // Replace with your contract address
       const contractABI = [
         {
           inputs: [
@@ -226,12 +234,12 @@ const AddCard = ({ onWalletConnect }) => {
   
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
   
-      // 5. Prepare parameters
-      const toAddress = await signer.getAddress(); // Current wallet address
+      // Prepare parameters
+      const toAddress = await signer.getAddress();
   
       console.log("Calling createGameCard with:", { toAddress, userMetadata, gameType });
   
-      // 6. Call createGameCard function
+      // Call createGameCard function
       const tx = await contract.createGameCard(toAddress, userMetadata, gameType);
       console.log("Transaction sent:", tx.hash);
   
@@ -240,15 +248,15 @@ const AddCard = ({ onWalletConnect }) => {
       // Wait for transaction confirmation
       await tx.wait();
       console.log("✅ Transaction confirmed!");
-      resetForm()
+      resetForm();
       alert("Game card created successfully!");
-      window.location.reload()
-
+      window.location.reload();
     } catch (err) {
       console.error("❌ Error calling createGameCard:", err.message || err);
       alert(`Failed to create game card: ${err.message}`);
     }
   };
+  
 
   return (
     <div className="add-card">
